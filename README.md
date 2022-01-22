@@ -1,7 +1,7 @@
 # Stopwatch
 
 - HTML (Pug)
-- Sass
+- Sass, Materialize CSS
 - Javascript
 
 <!--
