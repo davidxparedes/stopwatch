@@ -1,0 +1,29 @@
+doctype 
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0' )
+    link(rel='stylesheet' href='stylesheets/index.css')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css')
+    title Stopwatch
+  body
+
+  .container
+    .row
+      .col.s12.center-align
+        p.time 
+          span#mins 00
+          span :
+          span#secs 00
+          span .
+          span#tenths 00
+      .col.s6.right-align
+        button.btn-floating.btn-large.green.darken-3.w-100 start
+        button.btn-floating.btn-large.red.darken-4.w-100.hide stop
+      .col.s6.left-align
+        button.btn-floating.btn-large.black.w-100 reset
+        button.btn-floating.btn-large.grey.darken-2.w-100.hide lap
+      .col.s12.m6.offset-m3
+         ul#lapInfo.center-align
+
+    script(src='js/scripts.js')

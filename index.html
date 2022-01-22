@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Stopwatch</title>
+  </head>
+  <body></body>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 center-align">
+        <p class="time"> <span id="mins">00</span><span>:</span><span id="secs">00</span><span>.</span><span id="tenths">00</span></p>
+      </div>
+      <div class="col s6 right-align">
+        <button class="btn-floating btn-large green darken-3 w-100">start</button>
+        <button class="btn-floating btn-large red darken-4 w-100 hide">stop</button>
+      </div>
+      <div class="col s6 left-align">
+        <button class="btn-floating btn-large black w-100">reset</button>
+        <button class="btn-floating btn-large grey darken-2 w-100 hide">lap</button>
+      </div>
+      <div class="col s12 m6 offset-m3">
+        <ul class="center-align" id="lapInfo"></ul>
+      </div>
+    </div>
+    <script src="js/scripts.js"></script>
+  </div>
+</html>
