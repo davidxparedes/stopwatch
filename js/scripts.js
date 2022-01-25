@@ -10,12 +10,14 @@ let tenthInterval;
 let lapTimesClicked = [];
 let lapTimesConverted = [];
 
+// hide or show buttons when clicking start or stop
 function toggleHiddenUnhidden () {
   allBtns.forEach((btn) => {
     btn.classList.toggle('hide');
   });
 }
 
+// start the interval
 function start () {
   toggleHiddenUnhidden();
   tenthInterval = setInterval(timer, 10);
@@ -23,20 +25,26 @@ function start () {
 
 function stop () {
   toggleHiddenUnhidden();
-   clearInterval(tenthInterval);
+  clearInterval(tenthInterval);
 }
 
 function lap () {
+  // lap click sets current secs and tenths to lapTime
   let lapTime = `${secs}.${tenths}`;
   
+  // lapTime is added to the beginning of lapTimesClicked array
   lapTimesClicked.unshift(lapTime);
   
+  // if lapTimesClicked has a second entry, 
+  // that second entry is subtracted from the current lapTime
   if (lapTimesClicked[1]) {
     let prevLapTime = lapTimesClicked[1];
-    lapTime = (lapTime - prevLapTime).toFixed(2);
+    lapTimeConverted = (lapTime - prevLapTime).toFixed(2);
 
-    lapTimesConverted.unshift(lapTime);
+    lapTimesConverted.unshift(lapTimeConverted);
   } else {
+    // if this is the first time lap is clicked
+    // the current lap time is pushed into lapTimesConverted
     lapTimesConverted.push(lapTime);
   }
 
