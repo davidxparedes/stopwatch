@@ -17,6 +17,43 @@ function toggleHiddenUnhidden () {
   });
 }
 
+function timer () {
+  tenths++;
+  
+  if (tenths <= 9) {
+    tenths = `0${tenths}`;
+    tenthSpan.innerHTML = tenths;
+  } else {
+    tenthSpan.innerHTML = tenths;
+  }
+  
+  if (tenths > 99) {
+    tenths = '00';
+    tenthSpan.innerHTML = tenths;
+    secs++;
+    secSpan.innerHTML = `0${secs}`;
+  }
+  
+  // not seconds with a leading 0
+  if (secs > 9) {
+    secSpan.innerHTML = secs;
+  }
+  
+  if (secs > 59) {
+    secs = '00';
+    secSpan.innerHTML = secs;
+    mins++;
+    minSpan.innerHTML = `0${mins}`;
+  }
+
+  // reset and stop when timer reaches 59 mins, 59 seconds and 99 tenths
+  if (mins === 59 && secs === 59 && tenths === 99) {
+    clearInterval(tenthInterval);
+    reset();
+    toggleHiddenUnhidden();
+  }
+}
+
 // start the interval
 function start () {
   toggleHiddenUnhidden();
@@ -70,36 +107,6 @@ function reset () {
   lapInfo.innerHTML = '';
   lapTimesClicked = [];
   lapTimesConverted = [];
-}
-
-function timer () {
-  tenths++;
-  
-  if (tenths <= 9) {
-    tenths = `0${tenths}`;
-    tenthSpan.innerHTML = tenths;
-  } else {
-    tenthSpan.innerHTML = tenths;
-  }
-  
-  if (tenths > 99) {
-    tenths = '00';
-    tenthSpan.innerHTML = tenths;
-    secs++;
-    secSpan.innerHTML = `0${secs}`;
-  }
-  
-  // not seconds with a leading 0
-  if (secs > 9) {
-    secSpan.innerHTML = secs;
-  }
-  
-  if (secs > 59) {
-    secs = '00';
-    secSpan.innerHTML = secs;
-    mins++;
-    minSpan.innerHTML = `0${mins}`;
-  }
 }
 
 const util = {
