@@ -11,13 +11,19 @@ let lapTimesClicked = [];
 let lapTimesConverted = [];
 
 // hide or show buttons when clicking start or stop
-function toggleHiddenUnhidden () {
+function toggleHiddenUnhidden() {
   allBtns.forEach((btn) => {
     btn.classList.toggle('hide');
   });
 }
 
-function timer () {
+// start the interval
+function start() {
+  toggleHiddenUnhidden();
+  tenthInterval = setInterval(timer, 10);
+}
+
+function timer() {
   tenths++;
   
   if (tenths <= 9) {
@@ -31,12 +37,13 @@ function timer () {
     tenths = '00';
     tenthSpan.innerHTML = tenths;
     secs++;
-    secSpan.innerHTML = `0${secs}`;
-  }
-  
-  // not seconds with a leading 0
-  if (secs > 9) {
-    secSpan.innerHTML = secs;
+
+    if (secs <= 9) {
+      secs = `0${secs}`;
+      secSpan.innerHTML = secs;
+    } else {
+      secSpan.innerHTML = secs;
+    }
   }
   
   if (secs > 59) {
@@ -54,23 +61,14 @@ function timer () {
   }
 }
 
-// start the interval
-function start () {
-  toggleHiddenUnhidden();
-  tenthInterval = setInterval(timer, 10);
-}
-
-function stop () {
-  toggleHiddenUnhidden();
-  clearInterval(tenthInterval);
-}
-
-function lap () {
-  // lap click sets current secs and tenths to lapTime
-  let lapTime = `${secs}.${tenths}`;
-  
+function lap() {
+  // lap click sets current mins secs and tenths to lapTime
+  let lapTime = `${mins}${secs}.${tenths}`;
+console.log('mins: ', mins, 'secs: ', secs, 'tenths: ', tenths)
+console.log('lapBtn click lapTime: ', lapTime);
   // lapTime is added to the beginning of lapTimesClicked array
   lapTimesClicked.unshift(lapTime);
+console.log('lapTimesClicked array: ', lapTimesClicked);
   
   // if lapTimesClicked has a second entry, 
   // that second entry is subtracted from the current lapTime
@@ -82,7 +80,8 @@ function lap () {
   } else {
     // if this is the first time lap is clicked
     // the current lap time is pushed into lapTimesConverted
-    lapTimesConverted.push(lapTime);
+    // parseFloat so it doesn't show with leading zeroes
+    lapTimesConverted.push(parseFloat(lapTime));
   }
 
   lapInfo.innerHTML = lapTimesConverted.map(lapTime => {
@@ -97,7 +96,12 @@ function lap () {
   }).join('');
 }
 
-function reset () {
+function stop() {
+  toggleHiddenUnhidden();
+  clearInterval(tenthInterval);
+}
+
+function reset() {
   secs = '00';
   tenths = '00';
   mins = '00';
