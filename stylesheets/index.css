@@ -15,4 +15,13 @@
   margin-top: 28px;
 }
 
+li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #cacaca;
+}
+li span {
+  margin: 2px 10px;
+}
+
 /*# sourceMappingURL=index.css.map */
