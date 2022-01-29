@@ -8,20 +8,18 @@ let secs = '00';
 let tenths = '00';
 let tenthInterval;
 let prevLap = {mins: '00', secs: '00', tenths: '00' };
-let lapTimes = [];
+let prevLaps = [];
+let lapTimesNoPunctuation = [];
 
-// hide or show buttons when clicking start or stop
 function toggleHiddenUnhidden() {
   allBtns.forEach((btn) => {
     btn.classList.toggle('hide');
   });
 }
 
-// start the interval
 function start() {
   toggleHiddenUnhidden();
-  // tenthInterval = setInterval(timer, 10);
-  tenthInterval = setInterval(timer, 1);
+  tenthInterval = setInterval(timer, 10);
 }
 
 function timer() {
@@ -104,41 +102,31 @@ function lap() {
     tenths
   }
 
-  lapTimes.unshift(`${lapMins}:${lapSecs}.${lapTenths}`);
+  prevLaps.unshift({mins: `${lapMins}`, secs: `${lapSecs}`, tenths: `${lapTenths}`});
 
-  console.log('converted lap* times ',lapMins, lapSecs, lapTenths);
-  console.log('prevLap ', prevLap);
-  console.log('lapTimes ', lapTimes);
+  lapInfo.innerHTML = prevLaps.map((lapTime, index) => {
+    
+    let lapTimeNoPunctuation = `${lapTime.mins}${lapTime.secs}${lapTime.tenths}`;
 
-  lapInfo.innerHTML = lapTimes.map((lapTime, index) => {
-    return `<li>
-              <span>Lap ${lapTimes.length - index}</span>
-              <span>${lapTime}</span>
-            </li>`;
+    lapTimesNoPunctuation.unshift(lapTimeNoPunctuation);
+   
+    if( lapTimeNoPunctuation == Math.min(...lapTimesNoPunctuation)) {
+      return `<li class="green white-text">
+                <span>Lap ${prevLaps.length - index}</span>
+                <span>${lapTime.mins}:${lapTime.secs}.${lapTime.tenths}</span>
+              </li>`;
+    } else if (lapTimeNoPunctuation == Math.max(...lapTimesNoPunctuation))  {
+      return `<li class="red white-text">
+                <span>Lap ${prevLaps.length - index}</span>
+                <span>${lapTime.mins}:${lapTime.secs}.${lapTime.tenths}</span>
+              </li>`;
+    } else {
+      return `<li>
+                <span>Lap ${prevLaps.length - index}</span>
+                <span>${lapTime.mins}:${lapTime.secs}.${lapTime.tenths}</span>
+              </li>`;
+    } 
   }).join('');
-
-  // let lapTime = `${mins}${secs}.${tenths}`;
-
-  // lapTimesClicked.unshift(lapTime);
-
-  // if (lapTimesClicked[1]) {
-  //   let prevLapTime = lapTimesClicked[1];
-  //   lapTimeConverted = (lapTime - prevLapTime).toFixed(2);
-
-  //   lapTimesConverted.unshift(lapTimeConverted);
-  // } else {
-  //   lapTimesConverted.push(parseFloat(lapTime));
-  // }
-
-  // lapInfo.innerHTML = lapTimesConverted.map(lapTime => {
-  //   if( lapTime == Math.min(...lapTimesConverted)) {
-  //     return `<li class="green white-text">${lapTime}</li>`;
-  //   } else if (lapTime == Math.max(...lapTimesConverted))  {
-  //     return `<li class="red white-text">${lapTime}</li>`;
-  //   } else {
-  //     return `<li>${lapTime}</li>`;
-  //   } 
-  // }).join('');
 }
 
 function stop() {
@@ -154,7 +142,9 @@ function reset() {
   tenthSpan.innerHTML = tenths;
   minSpan.innerHTML = mins;
   lapInfo.innerHTML = '';
-  prevLap
+  prevLap = {mins: '00', secs: '00', tenths: '00' };
+  prevLaps = [];
+  lapTimesNoPunctuation = []
 }
 
 const util = {
